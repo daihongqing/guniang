@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D旋转相册</title>
+    <style>
+        /* 清除页面中所有元素默认自带的margin 和padding,把它们都设置 为0 */
+      *{
+          margin:0;padding:0;
+      }
+      body{
+          background:#000;
+      }
+      .wrapper{
+          width:150px;
+          height:150px;
+          margin:150px auto;
+          perspective:1200px;
+
+      }
+      .imgBox{
+          width:100%;
+          height:100%;
+          position:relative;
+          transform-style:preserve-3d;
+      }
+      .imgBox>img{
+          height:100%;
+          width:100%;
+          height:100%;
+          position:absolute;
+          left:0;
+          top:0;
+          box-shadow:0 0 8px 0 #eee;
+      }
+      .imgBox{
+          position:relative;
+      }
+      .bottom{
+          width:1200px;
+          height:1200px;
+          background:radial-gradient(rgba(102,0,204,0.5) 30%,rgba(255,255,255,0) 60%);
+          position:absolute;
+          left:50%;
+          top:150px;
+          margin-left:-600px;
+          transform:rotateX(90deg);
+          margin-top:-600px;
+
+      }
+    </style>
+   
+</head>
+<body>
+    <!--div.wrapper>div.imgBox>img[src='images/$.jpg']*8 -->
+    <audio src="imges2/都要好好的.mp3" id="audio" autoplay></audio>
+    <div class="wrapper">
+           
+        <div class="imgBox">
+            <img src="imges2/1.jpg" alt="">
+            <img src="imges2/2.jpg" alt="">
+            <img src="imges2/3.jpg" alt="">
+            <img src="imges2/4.jpg" alt="">
+            <img src="imges2/5.jpg" alt="">
+            <img src="imges2/6.jpg" alt="">
+           
+            <img src="imges2/8.jpg" alt="">
+       
+            <img src="imges2/10.jpg" alt="">
+          
+            <img src="imges2/12.jpg" alt="">
+            <div class="bottom"></div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    var audio = document.getElementById("audio");
+        document.ontouchend = function() {
+            audio.play()
+        }
+ 
+ window.onload=function(){
+       // 获取所有的图片
+       var imgLists=document.querySelectorAll(".imgBox>img");
+       var len=imgLists.length;
+       var itemDeg=360/len;
+       var imgBox=document.querySelector(".imgBox");
+       /*
+       1、发牌的效果：
+          结构中的第一张，最后出现
+             i=0;    7*0.2   1.4s   len-1-i
+             i=1;    6*0.2   1.2s
+             i=2;    5*0.2   1s
+             i=3     4*0.2   0.8s
+             i=4     3*0.2   0.6s
+             i=5     2*0.2   0.4s
+             i=6     1*0.2   0.2s  
+             i=7     0*0.2   0s
+
+
+          结构中的最后一张，应该先出现
+
+       */
+       for(var i=0;i<len;i++){
+           imgLists[i].style.transform="rotateY("+itemDeg*i+"deg) translateZ(300px)";
+           imgLists[i].style.transition="1.5s "+(len-1-i)*0.2+"s";
+          
+       }
+
+       var  num=0;
+       setInterval(function(){
+           num++;
+           var val=num*0.2;
+           imgBox.style.transform="rotateX(-10deg) rotateY("+val+"deg)";
+
+       },30)
+ }
+</script>
